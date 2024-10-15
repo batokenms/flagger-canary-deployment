@@ -33,6 +33,9 @@ interval: 1m: The traffic will shift every 1 minute. This means that Flagger wil
 # Example of Traffic Shifting Over Time:
 
 Start: Initially, 0% of the traffic is sent to the canary (Nginx), and 100% goes to the stable version (Apache).
+
 After 1 minute: If the canary passes the health checks (e.g., success rate > 99%, latency < 500ms), Flagger will shift 10% of the traffic to the canary.
+
 After 2 minutes: If the canary continues to perform well, Flagger will increase the traffic to 20%.
+
 After 3 minutes: If the canary is still healthy, traffic increases to 30%, and so on.
