@@ -1,0 +1,24 @@
+apiVersion: flagger.app/v1  
+kind: Canary
+metadata:
+  name: apache-canary
+  namespace: production  # Ensure namespace is 'production'
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: apache-deployment  # Refers to stable deployment
+  service:
+    port: 80
+    primaryService: apache-primary  # Primary (stable) service
+    canaryService: nginx-canary     # Canary service
+  canaryAnalysis:
+    interval: 1m
+    threshold: 5
+    maxWeight: 50
+    stepWeight: 10
+    metrics:
+      - name: request-success-rate
+        threshold: 99
+      - name: request-duration
+        threshold: 500
